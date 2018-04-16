@@ -3,10 +3,14 @@ const status = require('http-status');
 export default {
 
     loginUser: (req, res, next) => {
-        res.json({
-            message: 'User logged in',
-            success: true
-        })
+        const { username, password } = req.body;
+        if (!username || !password) {
+            res.status(status.BAD_REQUEST)
+                .json({
+                    message: 'Invalid Username & Password: Username or Password cannot be empty',
+                    success: false
+            });
+        }
     },
 
     createImageThumbnail: (req, res, next) => {

@@ -22,7 +22,7 @@
   },
   "scripts": {
     "start": "babel-watch ./src/index.js",
-    "test": "mocha --compilers js:babel-core/register -R spec ./src/test/*.js"
+    "test": "mocha --timeout 4000 --compilers js:babel-core/register -R spec ./src/test/*.js"
   },
   "repository": {
     "type": "git",

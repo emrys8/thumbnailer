@@ -24,18 +24,16 @@ describe('Thumbnail API', () => {
     });
 
     describe('User Mock Login', () => {
-        describe('handle invalid login request', () => {
             it('should reject an invalid login request', (done) => {
                 request(app)
                   .post('/login')
                   .send({ username: '', password: '' })
                   .expect((res) => {
-                      expect(res.statusCode).to.equal(400, 'Bad Request');
-                      expect(res.body.status).to.equals(false);
+                      expect(res.statusCode).to.equal(400);
+                      expect(res.body.success).to.equal(false);
                   })
                   .expect(400, done);
             });
-        });
 
         describe('handle valid login request', () => {
             it('should login a user with the right credentials', (done) => {
