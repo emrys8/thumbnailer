@@ -27,7 +27,7 @@ const start = (port) => {
 
         thumbnailAPI(app);
 
-        const server = app.listen(options.port, () => resolve(server));
+        const server = app.listen(port, () => resolve(server));
     });
 }
 
