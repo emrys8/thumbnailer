@@ -19,17 +19,14 @@ export default (tokenSigner) => {
     const decodeToken = (token) => {
 
         return new Promise((resolve, reject) => {
-            if (token) {
+
                 tokenSigner.verify(token, process.env.JWT_SECRET, (err, decoded) => {
                     if (err) {
                         reject(new Error('Invalid or Expired token'));
                     } else {
                         resolve(decoded);
                     }
-                })
-            } else {
-                reject(new Error('Token must be given'));
-            }
+                });
         })
     }
 

@@ -71,5 +71,16 @@ describe('Thumbnail API', () => {
              .send({ imageUrl: 'http://my-image.jpg' })
              .expect(200, done);
         });
+
+        it('should reject a request without a valid token', (done) => {
+            request(app)
+             .post('/create-thumbnail')
+             .send({ imageUrl: 'http://some-image.png'})
+             .expect((res) => {
+                 expect(res.statusCode).to.be.equal(400);
+                 expect(res.body.success).to.equals(false);
+             })
+             .expect(400, done);
+        })
     });
 })
