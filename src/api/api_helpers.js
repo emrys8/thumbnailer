@@ -1,7 +1,10 @@
 import jwt from 'jsonwebtoken';
+import jsonpatch from 'jsonpatch';
 import status from 'http-status';
 import authToken from '../auth';
+import jsonPatcher from '../utility/patcher';
 
+const { applyJSONPatch } = jsonPatcher(jsonpatch);
 const { generateToken, decodeToken } = authToken(jwt);
 
 export default {
@@ -58,9 +61,20 @@ export default {
     },
 
     jsonPatch: (req, res, next) => {
-        res.json({
-            message: 'JSON patched object',
-            success: true
-        });
+        const { patch, document } = req.body;
+        applyJSONPatch(document, patch)
+         .then(patchedDoc => {
+             return res.status(STATUS.OK)
+               .json({
+                   success: true,
+                   patchedDoc
+               });
+         })
+         .catch(err => {
+             res.json({
+                 success: false,
+                 message: err.message
+             });
+         });
     },
 }
