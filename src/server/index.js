@@ -2,7 +2,10 @@ import express from 'express';
 import logger from 'morgan';
 import helmet from 'helmet';
 import compression from 'compression';
+import { config } from 'dotenv';
 import thumbnailAPI from '../api/thumbnailer';
+
+config();
 
 const start = (port) => {
     return new Promise((resolve, reject) => {

@@ -43,8 +43,8 @@ describe('Thumbnail API', () => {
                   .expect((res) => {
                       userToken = res.body.token;
                       expect(res.statusCode).to.be.equal(200);
-                      expect(res.body.status).to.equals(true);
-                      expect(typeof res.body.token).to.equals('string');
+                      expect(res.body.success).to.equals(true);
+                      expect(typeof userToken).to.equals('string');
                   })
                   .expect(200, done);
             });
