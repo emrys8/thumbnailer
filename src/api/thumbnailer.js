@@ -5,5 +5,5 @@ const { loginUser, createImageThumbnail, jsonPatch } = apiHelper;
 export default (app) => {
     app.post('/login', loginUser);
     app.post('/create-thumbnail', authToken, createImageThumbnail);
-    app.post('/apply-json-patch', authToken, jsonPatch);
+    app.patch('/apply-json-patch', authToken, jsonPatch);
 }

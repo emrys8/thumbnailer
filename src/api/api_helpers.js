@@ -4,7 +4,10 @@ import status from 'http-status';
 import authToken from '../auth';
 import jsonPatcher from '../utility/patcher';
 
-const { applyJSONPatch } = jsonPatcher(jsonpatch);
+
+const applyJSONPatch = jsonPatcher(jsonpatch);
+
+console.log(`in api_helpers ${typeof applyJSONPatch}`);
 const { generateToken, decodeToken } = authToken(jwt);
 
 export default {
@@ -64,7 +67,9 @@ export default {
         const { patch, document } = req.body;
         applyJSONPatch(document, patch)
          .then(patchedDoc => {
-             return res.status(STATUS.OK)
+             console.log(`inside jsonPatch...`);
+             console.log(patchedDoc);
+             res.status(status.OK)
                .json({
                    success: true,
                    patchedDoc

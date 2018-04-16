@@ -11,6 +11,17 @@ describe('Thumbnail API', () => {
         password: 'ritchie'
     };
 
+    const jsonTestDoc = {
+        "_id": 1,
+        "name": "Beats Headphone",
+        "stock": 4,
+        "price": 109.99
+    };
+
+    const jsontestPatch = [
+        { "op": "remove", "path": "/stock" }
+    ];
+
     beforeEach(() => {
         return server.start(3000)
           .then(serv => {
@@ -81,6 +92,26 @@ describe('Thumbnail API', () => {
                  expect(res.body.success).to.equals(false);
              })
              .expect(400, done);
-        })
+        });
     });
+
+    describe('JSON Patch', () => {
+        it('should return a patched object', (done) => {
+            request(app)
+             .patch('/apply-json-patch')
+             .set('x-access-token', userToken)
+             .send({
+                 document: jsonTestDoc,
+                 patch: jsontestPatch
+             })
+             .expect((res) => {
+                 expect(res.body.patchedDoc).to.deep.equal({
+                     "_id": 1,
+                     "name": "Beats Headphone",
+                     "price": 109.99
+                 });
+             })
+             .expect(200, done);
+        })
+    })
 })
