@@ -1,11 +1,13 @@
 import jwt from 'jsonwebtoken';
 import jsonpatch from 'jsonpatch';
 import status from 'http-status';
+import Jimp from 'jimp';
 import authToken from '../auth';
 import jsonPatcher from '../utility/patcher';
-
+import imageResizer from '../utility';
 
 const applyJSONPatch = jsonPatcher(jsonpatch);
+const createThumbnail = imageResizer(Jimp);
 
 console.log(`in api_helpers ${typeof applyJSONPatch}`);
 const { generateToken, decodeToken } = authToken(jwt);
@@ -48,16 +50,27 @@ export default {
 
         // we want to service http|https requests ONLY
         const { imageUrl } = req.body;
-        if (/^http*/.test(imageUrl)) {
-            res.status(status.OK)
-             .json({
-                 message: 'Here\'s your thumbnailed image',
-                 success: true
-            });
+        if(imageUrl) {
+            createThumbnail(imageUrl)
+             .then(resizedImage => {
+                 res.status(status.OK)
+                  .json({
+                      message: `Image ${imageUrl} was resized to a 50px by 50px image`,
+                      payload: resizedImage,
+                      success: true
+                  });
+             })
+             .catch(err => {
+                 res.status(status.BAD_REQUEST)
+                  .json({
+                      message: err.message,
+                      success: false
+                  })
+             }); 
         } else {
             res.status(status.BAD_REQUEST)
               .json({
-                  message: 'Invalid URL: please provide a well-formed URL startiing with http or https',
+                  message: 'Please provide a URL of an image in the format (.jpg, .jpeg, .png, or .bmp)',
                   success: false
               });
         }
