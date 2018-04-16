@@ -32,4 +32,10 @@ export default (tokenSigner) => {
             }
         })
     }
+
+    // return Object.create({
+    //     generateToken,
+    //     decodeToken
+    // });
+    return { generateToken, decodeToken }
 }
