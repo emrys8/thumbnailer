@@ -80,8 +80,6 @@ export default {
         const { patch, document } = req.body;
         applyJSONPatch(document, patch)
          .then(patchedDoc => {
-             console.log(`inside jsonPatch...`);
-             console.log(patchedDoc);
              res.status(status.OK)
                .json({
                    success: true,

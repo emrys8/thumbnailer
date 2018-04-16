@@ -2,11 +2,6 @@ import image2Base64 from 'image-to-base64';
 
 export default (resizer) => {
 
-<<<<<<< HEAD
-    const createThumbnail = (imageUrl) => {
-      // NOT IMPLEMENTED YET: Image Resizer service
-    }
-=======
     const createThumbnail = (imageUrl, options= {
       width: 50, height:50 }) => {
         
@@ -16,9 +11,10 @@ export default (resizer) => {
         if (/^http*/.test(imageUrl)) {
           const { width, height } = options;
           resizer.read(imageUrl)
-            .resize(width, height)
-            .then(image2Base64)
-            .then(base64Image => resolve(base64Image))
+            .then(image => {
+              image.resize(width, height)
+              resolve(image);
+            })
             .catch(err => {
               console.error(err); // Use DEBUG here
             })
@@ -29,5 +25,4 @@ export default (resizer) => {
     };
 
     return createThumbnail;
->>>>>>> api-dev
 }
