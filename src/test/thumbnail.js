@@ -27,7 +27,7 @@ describe('Thumbnail API', () => {
         describe('handle invalid login request', () => {
             it('should reject an invalid login request', (done) => {
                 request(app)
-                  .post('/api/login')
+                  .post('/login')
                   .send({ username: '', password: '' })
                   .expect((res) => {
                       expect(res.statusCode).to.equal(400, 'Bad Request');
@@ -40,7 +40,7 @@ describe('Thumbnail API', () => {
         describe('handle valid login request', () => {
             it('should login a user with the right credentials', (done) => {
                 request(app)
-                  .post('/api/login')
+                  .post('/login')
                   .send(testUser)
                   .expect((res) => {
                       userToken = res.body.token;
@@ -56,7 +56,7 @@ describe('Thumbnail API', () => {
     describe('Thumbnail Creation', () => {
         it('should reject request with malformed image URL', (done) => {
             request(app)
-              .post('/api/create-thumbnail')
+              .post('/create-thumbnail')
               .set('x-access-token', userToken)
               .send({ imageUrl: 'file://my-image.jpg' })
               .expect((res) => {
@@ -68,7 +68,7 @@ describe('Thumbnail API', () => {
 
         it('should create an image thumbnail', (done) => {
             request(app)
-             .post('/api/create-thumbnail')
+             .post('/create-thumbnail')
              .set('x-access-token', userToken)
              .send({ imageUrl: 'http://my-image.jpg' })
              .expect(200, done);
