@@ -39,10 +39,22 @@ export default {
     },
 
     createImageThumbnail: (req, res, next) => {
-        res.json({
-            message: 'Image Thumbnail Creation successful',
-            success: true
-        });
+
+        // we want to service http|https requests ONLY
+        const { imageUrl } = req.body;
+        if (/^http*/.test(imageUrl)) {
+            res.status(status.OK)
+             .json({
+                 message: 'Here\'s your thumbnailed image',
+                 success: true
+            });
+        } else {
+            res.status(status.BAD_REQUEST)
+              .json({
+                  message: 'Invalid URL: please provide a well-formed URL startiing with http or https',
+                  success: false
+              });
+        }
     },
 
     jsonPatch: (req, res, next) => {
