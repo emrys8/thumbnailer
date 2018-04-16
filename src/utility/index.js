@@ -1,21 +1,27 @@
+import image2Base64 from 'image-to-base64';
 
 export default (resizer) => {
 
-    const createThumbnail = (imageUrl) => {
-      // NOT IMPLEMENTED YET: Image Resizer service
-    },
+    const createThumbnail = (imageUrl, options= {
+      width: 50, height:50 }) => {
+        
+       return new Promise((resolve, reject) => {
 
-    const applyJsonPatch = (patcher, patch, document) => {
-      // NOT IMPLEMENTED YET
-      return new Promise((resolve, reject) => {
-        if (!document || !patch) {
-          reject(new Error('No document to patch, please provide a document'));
-        } else {
-          const patchedObject = patcher.apply_patch(document, patch);
-          resolve(patchedObject);
-        }
-      });
-    }
+        // We will only handle HTTP or HTTPS request
+        if (/^http*/.test(imageUrl)) {
+          const { width, height } = options;
+          resizer.read(imageUrl)
+            .resize(width, height)
+            .then(image2Base64)
+            .then(base64Image => resolve(base64Image))
+            .catch(err => {
+              console.error(err); // Use DEBUG here
+            })
+         } else {
+           reject(new Error('Only URLs starting with HTTP or HTTPS are accepted'));
+         }
+       })
+    };
 
-    return { createThumbnail, applyJsonPatch };
+    return createThumbnail;
 }
