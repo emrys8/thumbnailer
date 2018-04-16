@@ -59,7 +59,7 @@ describe('Thumbnail API', () => {
               .send({ imageUrl: 'file://my-image.jpg' })
               .expect((res) => {
                   expect(res.statusCode).to.be.equal(400, 'Bad Request');
-                  expect(res.body.status).to.equals(false);
+                  expect(res.body.success).to.equals(false);
               })
               .expect(400, done);
         });
