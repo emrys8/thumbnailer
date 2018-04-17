@@ -81,7 +81,6 @@ describe('Thumbnail API', () => {
              .set('x-access-token', userToken)
              .send({ imageUrl: 'https://vignette.wikia.nocookie.net/gameofthrones/images/a/a5/Profile-JonSnow-707.png/revision/latest?cb=20170828030553' })
              .expect((res) => {
-                 console.log(res.body);
                  expect(typeof res.body.payload).to.be.equal('object');
                  expect(res.statusCode).to.equals(200);
              })
