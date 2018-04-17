@@ -69,11 +69,52 @@ describe('Thumbnail API', () => {
               .set('x-access-token', userToken)
               .send({ imageUrl: 'file://my-image.jpg' })
               .expect((res) => {
-                  expect(res.statusCode).to.be.equal(400, 'Bad Request');
+                  expect(res.statusCode).to.be.equal(400);
                   expect(res.body.success).to.equals(false);
               })
               .expect(400, done);
         });
+
+        it('should reject request with malformed image URL: NO .jpeg, .png, or .jpg', (done) => {
+            request(app)
+             .post('/api/create-thumbnail')
+             .set('x-access-token', userToken)
+             .send({ imageUrl: 'https://some_malformed_url'})
+             .expect((res) => {
+                 expect(res.statusCode).to.equal(400);
+                 expect(res.body.success).to.equals(false);
+             })
+             .expect(400, done);
+        });
+
+        it('should reject request with malformed image URL: NO .jpeg, .png, or .jpg', (done) => {
+            request(app)
+             .post('/api/create-thumbnail')
+             .set('x-access-token', userToken)
+             .send({ imageUrl: 'https://some_malformed_url.gif'})
+             .expect((res) => {
+                 expect(res.statusCode).to.equal(400);
+                 expect(res.body.success).to.equals(false);
+             })
+             .expect(400, done);
+        })
+
+        it('should return an image thumbnail', (done) => {
+            request(app)
+             .post('/api/create-thumbnail')
+             .set('x-access-token', userToken)
+             .send({ imageUrl: 'https://cointelegraph.com/storage/uploads/view/1ce2f935afa26ebcb64bbe86a6599be0.png'
+             })
+             .expect((res) => {
+                 const {width, height } = res.body.payload.bitmap;
+                 expect(res.statusCode).to.be.equal(200);
+                 expect(typeof res.body.payload).to.equal('object');
+                 expect(res.statusCode).to.equals(200);
+                 expect(width).to.equal(50);
+                 expect(height).to.equal(50)
+             })
+             .expect(200, done);
+        })
 
         it('should create an image thumbnail', (done) => {
             request(app)

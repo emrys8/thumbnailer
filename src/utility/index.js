@@ -22,7 +22,12 @@ export default (resizer) => {
        return new Promise((resolve, reject) => {
 
         // We will only handle HTTP or HTTPS request
-        if (/^http*/.test(imageUrl)) {
+        if (/^http*/.test(imageUrl) && 
+            
+             // can only service .jpeg, .jpg, .png image format
+             (imageUrl.includes('png') || imageUrl.includes('jpeg') ||
+             imageUrl.includes('jpg'))) {
+               
           const { width, height } = options;
           resizer.read(imageUrl)
             .then(image => {
@@ -33,7 +38,7 @@ export default (resizer) => {
               debug(err);
             })
          } else {
-           reject(new Error('Only URLs starting with HTTP or HTTPS are accepted'));
+           reject(new Error('Only image(.jpeg, .png, .jpg) URLs starting with HTTP or HTTPS are accepted '));
          }
        })
     };
