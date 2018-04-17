@@ -8,7 +8,10 @@ A simple, stateless microservice that provides authentication, json patching and
 Thumbnailer requires the Node.js, [download and install](https://nodejs.org/en/download/)
 
 Installation is done using the npm install command:
+[`npm install` command](https://docs.npmjs.com/getting-started/installing-npm-packages-locally):
+```bash
 $ npm install
+```
 
 This will install all dependencies
 
@@ -18,12 +21,18 @@ $ npm start
 
 This will start the application on the port 3000
 Use PORT=<port> to assign a different port
-
+```bash
 $ PORT=7888 npm start
+```
 
 ## API Endpoints
-* Login: /api/login
-* Image Thumbnail Generation: /api/create-thumbnail
-* JSON Patching: /api/apply-json-patch
+* **Login**: /api/login
+* **Image Thumbnail Generation**: /api/create-thumbnail
+* **JSON Patching**: /api/apply-json-patch
 
+### Examples
+To create an image thumbnail, use this:
+```bash
+$ curl -H "x-access-token: <token>" -d imageUrl='<http|https image URL>"
+```
 
