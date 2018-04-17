@@ -26,13 +26,25 @@ $ PORT=7888 npm start
 ```
 
 ## API Endpoints
-* **Login**: /api/login
-* **Image Thumbnail Generation**: /api/create-thumbnail
-* **JSON Patching**: /api/apply-json-patch
+* **Login**: POST /api/login
+* **Image Thumbnail Generation**: POST /api/create-thumbnail
+* **JSON Patching**: PATCH /api/apply-json-patch
 
 ### Examples
-To create an image thumbnail, use this:
-```bash
-$ curl -H "x-access-token: <token>" -d imageUrl='<http|https image URL> localhost:3000/api/create-thumbnail" 
-```
+NOTE: You have to be `logged in` to be able to access the image thumbnail and json patching services.
 
+To Login, specify any username, and password in the request body object
+Using Postman, enter:
+* username: String
+* password: String
+
+Upon a successful login, a token will be issued to you, protected routes will need this token.
+
+To create an image thumbnail, using curl:
+```bash
+$ curl -H "x-access-token: <token>" -d imageUrl='<http|https image URL> localhost:3000/api/create-thumbnail"
+```
+Using An HTTP Client like Postman, you can apply JSON patch to a document:
+Provide body parameters:
+* document: the object to be patched
+* patch: the patch to be made on the object

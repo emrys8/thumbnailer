@@ -16,7 +16,7 @@ module.exports = {
           "curly": ["error", "multi-line"],
           "import/no-unresolved": [2, { commonjs: true }],
           "no-shadow": ["error", { "allow": ["req", "res", "err"] }],
-          "valid-jsdoc": ["error", {
+          "valid-jsdoc": ["off", {
             "requireReturn": true,
             "requireReturnType": true,
             "requireParamDescription": false,
@@ -30,4 +30,4 @@ module.exports = {
               }
           }]
         }
-  }
+  };
