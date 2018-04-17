@@ -1,6 +1,19 @@
 
+/**
+ * Provides auth helpers and middleware
+ * @module
+ * @param {Object} tokenSigner
+ * @return {Function}
+ * @return {Function} 
+ */
 export default (tokenSigner) => {
 
+    /**
+     * Generates token for auth purposes
+     * @function generateToken
+     * @param {Object} payload - Object that will be signed
+     * @return {Promise}
+     */
     const generateToken = (payload) => {
 
         return new Promise((resolve, reject) => {
@@ -16,6 +29,12 @@ export default (tokenSigner) => {
         });
     };
 
+    /**
+     * A middleware for verifying auth token
+     * @function decodeToken
+     * @param {String} token - the token to be verified
+     * @return {Promise}
+     */
     const decodeToken = (token) => {
 
         return new Promise((resolve, reject) => {

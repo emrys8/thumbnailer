@@ -4,6 +4,13 @@ import authToken from './index';
 
 const { decodeToken } = authToken(jwt);
 
+/**
+ * The implementation of the auth middleware
+ * @function Middleware
+ * @param {Object} req - the request object
+ * @param {Object} res - the response object
+ * @param {Function} next - the next middleware
+ */
 export default (req, res, next) => {
     const token = req.body.token || req.query.token || req.headers['x-access-token'];
 

@@ -5,8 +5,15 @@ import compression from 'compression';
 import { config } from 'dotenv';
 import thumbnailAPI from '../api/thumbnailer';
 
+/** env vars configuration */
 config();
 
+/**
+ * Setup of the application server
+ * @function start
+ * @param {Number} port
+ * @return {Promise}
+ */
 const start = (port) => {
     return new Promise((resolve, reject) => {
         if (!port) {

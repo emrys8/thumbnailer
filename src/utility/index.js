@@ -1,10 +1,22 @@
 import image2Base64 from 'image-to-base64';
 
+/**
+ * The Image resizer logic
+ * @module
+ * @param {Object} resizer - Any Image resizer that supports the interface
+ * @return {Function}
+ */
 export default (resizer) => {
 
+  /**
+   * @function createThumbnail
+   * @param {String} imageUrl - an http/https image url 
+   * @param {Object} options - an object specifying, image height, and width
+   * @return {Promise}
+   */
     const createThumbnail = (imageUrl, options= {
       width: 50, height:50 }) => {
-        
+      
        return new Promise((resolve, reject) => {
 
         // We will only handle HTTP or HTTPS request

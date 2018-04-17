@@ -9,11 +9,17 @@ import imageResizer from '../utility';
 const applyJSONPatch = jsonPatcher(jsonpatch);
 const createThumbnail = imageResizer(Jimp);
 
-console.log(`in api_helpers ${typeof applyJSONPatch}`);
 const { generateToken, decodeToken } = authToken(jwt);
 
 export default {
 
+    /**
+     * Logs in a user into the service
+     * @function loginUser
+     * @param {Object} req - the request object
+     * @param {Object} res - the response object
+     * @param {Function} next
+     */
     loginUser: (req, res, next) => {
         const { username, password } = req.body;
         if (!username || !password) {
@@ -46,6 +52,14 @@ export default {
         }
     },
 
+    /**
+     * Creates an image thumbnail and returns it
+     * @function createImageThumbnail
+     * @param {Object} req - the request object
+     * @param {Object} res - the response object
+     * @param {Function} next
+     */
+
     createImageThumbnail: (req, res, next) => {
 
         // we want to service http|https requests ONLY
@@ -76,6 +90,13 @@ export default {
         }
     },
 
+    /**
+     * Creates a JSON patch of a document
+     * @function jsonPatch
+     * @param {Object} req - the request object
+     * @param {Object} res - the response object
+     * @param {Function} next
+     */
     jsonPatch: (req, res, next) => {
         const { patch, document } = req.body;
         applyJSONPatch(document, patch)
