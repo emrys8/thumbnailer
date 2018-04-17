@@ -1,4 +1,6 @@
 import image2Base64 from 'image-to-base64';
+import debug from 'debug';
+debug('image-resizer');
 
 /**
  * The Image resizer logic
@@ -28,7 +30,7 @@ export default (resizer) => {
               resolve(image);
             })
             .catch(err => {
-              console.error(err); // Use DEBUG here
+              debug(err);
             })
          } else {
            reject(new Error('Only URLs starting with HTTP or HTTPS are accepted'));

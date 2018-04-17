@@ -13,11 +13,14 @@ COPY src/ $HOME/app/src
 RUN chown -R arya:arya $HOME/* /usr/local/
 
 WORKDIR $HOME/app
-RUN npm cache clean && \
-    npm install --silent --progress=false --production
+RUN npm cache verify && \
+    npm install --silent --progress=false
 
 RUN chown -R arya:arya $HOME/*
 USER arya
+
+ENV JWT_SECRET hack_axe
+ENV NODE_ENV production
 
 EXPOSE 3000
 
