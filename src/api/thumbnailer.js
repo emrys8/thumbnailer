@@ -8,7 +8,7 @@ const { loginUser, createImageThumbnail, jsonPatch } = apiHelper;
  * @param {Object} app - Express top level object
  */
 export default (app) => {
-    app.post('/login', loginUser);
-    app.post('/create-thumbnail', authToken, createImageThumbnail);
-    app.patch('/apply-json-patch', authToken, jsonPatch);
+    app.post('/api/login', loginUser);
+    app.post('/api/create-thumbnail', authToken, createImageThumbnail);
+    app.patch('/api/apply-json-patch', authToken, jsonPatch);
 }

@@ -37,7 +37,7 @@ describe('Thumbnail API', () => {
     describe('User Mock Login', () => {
             it('should reject an invalid login request', (done) => {
                 request(app)
-                  .post('/login')
+                  .post('/api/login')
                   .send({ username: '', password: '' })
                   .expect((res) => {
                       expect(res.statusCode).to.equal(400);
@@ -49,7 +49,7 @@ describe('Thumbnail API', () => {
         describe('handle valid login request', () => {
             it('should login a user with the right credentials', (done) => {
                 request(app)
-                  .post('/login')
+                  .post('/api/login')
                   .send(testUser)
                   .expect((res) => {
                       userToken = res.body.token;
@@ -65,7 +65,7 @@ describe('Thumbnail API', () => {
     describe('Thumbnail Creation', () => {
         it('should reject request with malformed image URL', (done) => {
             request(app)
-              .post('/create-thumbnail')
+              .post('/api/create-thumbnail')
               .set('x-access-token', userToken)
               .send({ imageUrl: 'file://my-image.jpg' })
               .expect((res) => {
@@ -77,7 +77,7 @@ describe('Thumbnail API', () => {
 
         it('should create an image thumbnail', (done) => {
             request(app)
-             .post('/create-thumbnail')
+             .post('/api/create-thumbnail')
              .set('x-access-token', userToken)
              .send({ imageUrl: 'https://vignette.wikia.nocookie.net/gameofthrones/images/a/a5/Profile-JonSnow-707.png/revision/latest?cb=20170828030553' })
              .expect((res) => {
@@ -89,7 +89,7 @@ describe('Thumbnail API', () => {
 
         it('should reject a request without a valid token', (done) => {
             request(app)
-             .post('/create-thumbnail')
+             .post('/api/create-thumbnail')
              .send({ imageUrl: 'http://some-image.png'})
              .expect((res) => {
                  expect(res.statusCode).to.be.equal(400);
@@ -102,7 +102,7 @@ describe('Thumbnail API', () => {
     describe('JSON Patch', () => {
         it('should return a patched object', (done) => {
             request(app)
-             .patch('/apply-json-patch')
+             .patch('/api/apply-json-patch')
              .set('x-access-token', userToken)
              .send({
                  document: jsonTestDoc,
