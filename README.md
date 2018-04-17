@@ -33,6 +33,6 @@ $ PORT=7888 npm start
 ### Examples
 To create an image thumbnail, use this:
 ```bash
-$ curl -H "x-access-token: <token>" -d imageUrl='<http|https image URL>"
+$ curl -H "x-access-token: <token>" -d imageUrl='<http|https image URL> localhost:3000/api/create-thumbnail" 
 ```
 
